@@ -54,26 +54,41 @@ function addToCart(item_id){
 
    let checkContent = 'ADD TO CART';
 
-   if(!checkItemExist && addToCartButtonClick.innerText == checkContent) {
-     addToCartButtonClick.style.backgroundColor = '#FFCD9E';
-     addToCartButtonClick.innerText = 'Remove from Cart'; 
-     addToCartButtonClick.style.color = 'black'; 
-     createTableElements(tempItem); 
-     displayCartItems();
-     console.log(cartItems);
+   if(addToCartButtonClick.innerText == checkContent) {
+      if (!checkItemExist) {
+         addToCartButtonClick.style.backgroundColor = '#FFCD9E';
+         addToCartButtonClick.innerText = 'Remove from Cart'; 
+         addToCartButtonClick.style.color = 'black'; 
+         cartItems.push(tempItem);
+         createTableElements(); 
+      }  
    }else{
       addToCartButtonClick.style.backgroundColor = '#FF9A3D';
       addToCartButtonClick.innerText = 'ADD TO CART'; 
       addToCartButtonClick.style.color = 'whitesmoke'; 
-      removeItemFromCart(item_id);
-      displayCartItems();
-      console.log(cartItems);
+      bodyElement.addEventListener('click', event => {
+
+         let tempItem = products.find((item) => item.id == item_id);
+         let itemFind = cartItems.includes(tempItem);
+         let itemIndex = cartItems.findIndex((item) => item.id == tempItem.id);
+   
+          if (event.target == addToCartButtonClick) {
+               if( itemFind){
+                  cartItems.splice(itemIndex, 1);
+                  tableBody.rows[itemIndex].remove();
+                  calculateCartItemsAmount();
+               } 
+         }
+         
+      });
+      // removeItemFromCart(item_id);
    }
+   displayCartItems();
 
 }
 
 // Create row and column element for cart table each time the addToCart button is clicked
-function createTableElements(item) {
+function createTableElements() {
    let row = document.createElement('tr');
    row.style.height = "35px";
 
@@ -85,6 +100,7 @@ function createTableElements(item) {
    cell1.style.fontSize = 16 + "px";
    
    let cell2 = document.createElement('td');
+   cell2.id = "item-name";
    cell2.style.display = "flex";
    cell2.style.flexWrap = "wrap";
    cell2.style.flexDirection = row;
@@ -170,9 +186,9 @@ function createTableElements(item) {
 
    tableBody.appendChild(row);
 
-   cartItems.push(item);
+   // Push the product into cartItems array after creating table elements
+   // cartItems.push(item);
 
-   calculateCartItemsAmount();
 }
 
 
@@ -183,23 +199,30 @@ function displayCartItems() {
    let itemNameCell = '';
    let priceCell = '';
    let qtyCell = '';
-   for (let i = 0; i < cartItems.length; i++) {
+
+   // let i = '';
+   for (let i = 0; i < cartItems.length;  i++) {
+       
+
       indexCell = tableBody.rows[i].cells[0];
       itemNameCell = tableBody.rows[i].cells[1];
       priceCell = tableBody.rows[i].cells[2];
-      qtyCell = tableBody.rows[i].cells[3].childNodes[1]; 
-    }
-    for (let item of cartItems) {
-         item.qty = 1;
-         decrementQuantity(item);
-   
-         incrementQuantity(item);
-         itemNameCell.innerHTML = item.name;
-         priceCell.innerHTML = item.price; 
-         qtyCell.innerHTML = item.qty;           
-    }
-    
-   
+      qtyCell = tableBody.rows[i].cells[3].childNodes[1];
+
+   }
+   cartItems.forEach(item => {
+      item.qty = 1;
+      incrementQuantity(item);
+
+      decrementQuantity(item);
+      // indexCell.innerHTML = i;
+      itemsIndexing(indexCell);
+      itemNameCell.innerHTML = item.name;
+      priceCell.innerHTML = item.price; 
+      qtyCell.innerHTML = item.qty;
+   });
+   removeItemFromCart();
+   calculateCartItemsAmount(); 
 }
 
 
@@ -219,7 +242,8 @@ function calculateCartItemsAmount() {
    
    // Get element that displays total amount on cart
    let totalAmountElement = document.querySelector('.text').lastElementChild; 
-   totalAmountElement.innerHTML = '#' + totalAmount;
+   totalAmountElement.value = '#' + totalAmount;
+   console.log(totalAmountElement.value);
    return totalAmountElement;
 
 }
@@ -262,51 +286,39 @@ function incrementQuantity(item) {
       qtyCell = tableBody.rows[i].cells[3].childNodes[1];
     }
    incrementButton.onclick = () => {
-         item.qty++;
-         qtyCell.innerHTML = item.qty;
-         calculateCartItemsAmount();
+      item.qty++;
+      qtyCell.innerHTML = item.qty;
+      calculateCartItemsAmount();
    }
 }
 
 // Remove item from cart table when the remove button is clicked
 function removeItemFromCart(itemId) {
    let addToCartButtonClick = document.getElementById(itemId);
-
-   bodyElement.addEventListener('click', (event) => {
-
-      let tempItem = products.find((item) => item.id == itemId);
-      let itemFind = cartItems.includes(tempItem);
-      if (event.target == addToCartButtonClick) {
-         if( itemFind){
-            let itemIndex = cartItems.findIndex((item) => item.id == itemId);
-                  cartItems.splice(itemIndex, 1);
-
-            } 
-      }else{
-            console.log(false);
-         }
-      for (let i = 0; i < tableBody.rows.length; i++) {
-         let rowLastcell = tableBody.querySelectorAll('.delete-button');
-         
-         
-         let indexCell = tableBody.rows[i].cells[0];
-         cells = rowLastcell;
-
-
-         cells.forEach(cell => {
-            let itemRowName = cell.parentNode.childNodes[1].innerHTML;
-            
-            cell.onclick = () => {
-               let cellItemName = cell.parentNode.childNodes[1].innerHTML;
-               let tempItem = cartItems.findIndex((item) => item.name == cellItemName);
-               cartItems.filter(item => item !== itemFind);
-               cell.parentNode.remove();
-
-            }
-         })
-               // console.log(cartItems);
-
-      }
-   });
+   let addToCartButton = document.querySelectorAll('.product-button');
+      
    
+            
+   let rowLastcell = tableBody.querySelectorAll('.delete-button');
+   
+
+   
+   rowLastcell.forEach(cell => {
+      
+      cell.onclick = () => {
+         let rowNameCell = cell.parentNode.childNodes[1].innerHTML;
+         let itemIndex = cartItems.findIndex((item) => item.name == rowNameCell);
+         let checkCartItems = cartItems.find((item) => item.name == rowNameCell);
+         addToCartButton.forEach(button => {
+            if (checkCartItems.id == button.id) {
+               button.style.backgroundColor = '#FF9A3D';
+               button.innerText = 'ADD TO CART'; 
+               button.style.color = 'whitesmoke';  
+            }
+         });    
+         cartItems.splice(itemIndex, 1);
+         cell.parentNode.remove();
+         calculateCartItemsAmount();
+      }
+   });  
 }

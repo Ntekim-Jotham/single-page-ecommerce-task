@@ -1,0 +1,6 @@
+@media (max-width : 1200px) {
+    .nav-section{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

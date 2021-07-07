@@ -1,29 +1,40 @@
 body{
   margin: 0px;
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  /* display: flex;
+  flex-wrap: wrap; */
 }
 .main-container{
   background-color: #FFE9DC;
+  /* width: 100%; */
+  overflow: hidden;
 }
 
 
 
 .nav-section{
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row; 
 }
 
+.navs{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-grow: 0.82;
+  justify-content: center; 
+}
 #site-logo{
   display: flex;
-  flex-grow: 0.1;
+  flex-grow: 0.15;
   justify-content: flex-end;
 }
 
-#navs{
+#nav-links{
   display: flex;
-  flex-grow: 0.8;
+  flex-grow: 0.7;
   justify-content: center;
 }
 
@@ -50,12 +61,12 @@ body{
 
 
 
-#navs ul li{
+#nav-links ul li{
     list-style-type: none;
     display: inline-block;
 }
 
-#navs ul li a{
+#nav-links ul li a{
   text-decoration: none;
   color: rgb(27, 27, 27);
   font-weight: 600;
@@ -109,7 +120,7 @@ body{
   color: white;
   display: flex;
   flex-wrap: wrap;
-  height: 200px;
+  height: 160px;
 }
 
 #about-text p{
@@ -118,10 +129,12 @@ body{
   font-size: 23px;
   line-height: 30px;
   text-align: center;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: 120px;
+  margin-right: 120px;
   position: relative;
-  top: 45px;
+  top: 15px;
+  /* left: 20px;
+  right: 20px; */
   bottom: auto;
 }
 
@@ -130,7 +143,7 @@ body{
   margin-top: -1.9rem;
 }
 
-.product-wrap h1{
+#product-section h1{
    text-align: center;
    font-size: 46px;
    font-family: sans-serif;
@@ -138,13 +151,15 @@ body{
    padding-top: 4rem;
    padding-bottom: 3rem;
 }
-#products-1{
+.product-wrap{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   justify-content: space-evenly;
   padding-bottom: 2rem;
+  margin-left: 80px;
+  margin-right: 80px;
 }
 
 #products-2{
@@ -157,6 +172,9 @@ body{
   padding-bottom: 6rem;
 }
 
+.card{
+  margin-bottom: 4rem;
+}
 .card h2{
   text-align: center;
   font-size: 34px;
@@ -324,9 +342,11 @@ form{
   font-size: 18px;
 }
 
-.text b{
+#amount{
   font-size: 28px;
   font-weight: 600;
+  border: none;
+  text-align: center;
 }
 
 #inline-button{
@@ -362,3 +382,67 @@ form{
 }
 
 
+@media (max-width : 760px) {
+  .main-container{
+    width: 100%;
+  }
+
+  .nav-section{
+    padding-top: 2rem;
+    /* display: block; */
+    /* justify-content: center; */
+    /* flex-direction: row;  */
+  }
+  #e-millenial-text h1{
+    font-size: 58px;
+    /* position: relative; */
+    /* margin-left: 1px; */
+    /* display: none; */
+  }
+  /* #col{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  } */
+  /* #sm-size-screen-space{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 2;
+  } */
+  @media (min-width: 640px) {
+    #hero-image{
+
+      width: 70%;
+      /* margin-left: 60px; */
+    }
+  }  
+  
+  .card{
+     display: block;
+  }
+
+  .card > img{
+    width: 32rem;
+  }
+
+  .card > a{
+    width: 50%;
+    justify-content: center;
+    position: relative;
+    left: 3.1rem;
+    font-size: 22px;
+    
+  }
+  #about-section{
+    height: 250px;
+  }
+  #about-text p{
+    font-size: 30px;
+    word-spacing: 3px;
+    position: relative;
+    top: 10px;
+    margin-left: 35px;
+    margin-right: 35px;
+  }
+}

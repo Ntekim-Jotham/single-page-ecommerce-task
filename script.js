@@ -43,7 +43,7 @@ function payWithPaystack() {
     let handler = PaystackPop.setup({
       key: 'pk_test_4504976357a69d02a854e672905145e89f0b250f', // Replace with your public key
       email: document.getElementById("email").value,
-      amount: document.querySelector('#amount').value * 100, 
+      amount: document.getElementById('amount').value * 100, 
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
       // label: "Optional string that replaces customer email"
       onClose: function(){
@@ -54,11 +54,11 @@ function payWithPaystack() {
         alert(message);
       }
     });
-   console.log(document.getElementById('amount').value);
 
     handler.openIframe();
   }
 
+  console.log(document.getElementById('amount').value);
 
 
 

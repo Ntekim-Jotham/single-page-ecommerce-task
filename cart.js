@@ -77,14 +77,23 @@ function addToCart(item_id){
                   cartItems.splice(itemIndex, 1);
                   tableBody.rows[itemIndex].remove();
                   calculateCartItemsAmount();
+                  displayNumberOfItemsAddedToCart();
                } 
          }
          
       });
       // removeItemFromCart(item_id);
    }
+   displayNumberOfItemsAddedToCart();
    displayCartItems();
 
+}
+
+function displayNumberOfItemsAddedToCart() {
+   let cartSpanElement = document.querySelector('#cart-button').lastElementChild;
+   let itemCount = tableBody.rows.length;
+   cartSpanElement.innerText = itemCount;
+   // console.log(itemCount == cartItems.length);
 }
 
 // Create row and column element for cart table each time the addToCart button is clicked
@@ -186,9 +195,6 @@ function createTableElements() {
 
    tableBody.appendChild(row);
 
-   // Push the product into cartItems array after creating table elements
-   // cartItems.push(item);
-
 }
 
 
@@ -199,11 +205,11 @@ function displayCartItems() {
    let itemNameCell = '';
    let priceCell = '';
    let qtyCell = '';
-
+   let index = '';
    // let i = '';
-   for (let i = 0; i < cartItems.length;  i++) {
+   for (let i = 0; i < tableBody.rows.length;  i++) {
        
-
+      index = i;
       indexCell = tableBody.rows[i].cells[0];
       itemNameCell = tableBody.rows[i].cells[1];
       priceCell = tableBody.rows[i].cells[2];
@@ -215,7 +221,7 @@ function displayCartItems() {
       incrementQuantity(item);
 
       decrementQuantity(item);
-      // indexCell.innerHTML = i;
+      // indexCell.innerHTML = index;
       itemsIndexing(indexCell);
       itemNameCell.innerHTML = item.name;
       priceCell.innerHTML = item.price; 
@@ -243,7 +249,6 @@ function calculateCartItemsAmount() {
    // Get element that displays total amount on cart
    let totalAmountElement = document.querySelector('.text').lastElementChild; 
    totalAmountElement.value = '#' + totalAmount;
-   console.log(totalAmountElement.value);
    return totalAmountElement;
 
 }
@@ -251,7 +256,7 @@ function calculateCartItemsAmount() {
 // Numbering of items based on the number of items on cart
 function itemsIndexing(indexColumn) {
    let i = 0; 
-   while (i < cartItems.length) {
+   while (i < tableBody.rows.length) {
       i += 1;
       indexColumn.innerHTML = i; 
    }
@@ -294,14 +299,9 @@ function incrementQuantity(item) {
 
 // Remove item from cart table when the remove button is clicked
 function removeItemFromCart(itemId) {
-   let addToCartButtonClick = document.getElementById(itemId);
    let addToCartButton = document.querySelectorAll('.product-button');
-      
-   
             
    let rowLastcell = tableBody.querySelectorAll('.delete-button');
-   
-
    
    rowLastcell.forEach(cell => {
       
@@ -319,6 +319,7 @@ function removeItemFromCart(itemId) {
          cartItems.splice(itemIndex, 1);
          cell.parentNode.remove();
          calculateCartItemsAmount();
+         displayNumberOfItemsAddedToCart();
       }
    });  
 }

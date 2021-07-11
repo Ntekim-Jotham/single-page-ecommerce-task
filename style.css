@@ -406,18 +406,24 @@ form{
    color: rgb(80, 80, 80);
 }
 
-/* @media (min-width: 930px) and(max-width: 1300px) {
+@media only screen and (max-width: 1300px) and (min-width: 950px) {
+  
+
+  footer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
   .footer-text p{
     position: relative;
     left: 0px;
-    text-align: end;
   }
+
   .footer-text{
-    display: flex;
     position: relative;
-    margin-right: 80px !important;
+    right: 10rem;
   }
-} */
+}
 @media (max-width: 1050px) {
   #about-section {
     height: 180px;
@@ -457,8 +463,6 @@ form{
   }
 
   #cart-button span {
-    /* position: relative; */
-    /* bottom: 2px; */
     vertical-align: middle;
     font-size: 1.5rem;
     font-weight: 700;
@@ -477,11 +481,9 @@ form{
   #about-text p{
     margin-left: 25px ;
     margin-right: 25px;
-    /* text-align: left !important; */
   }
 
   footer{
-    /* height: 10rem; */
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -489,7 +491,6 @@ form{
   .footer-text p{
     position: relative;
     left: 0px;
-    /* right: 0px; */
     display: flex;
     text-align: center;
   }
@@ -518,7 +519,6 @@ form{
   }
 
   footer{
-    /* height: 10rem; */
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -526,7 +526,6 @@ form{
   .footer-text p{
     position: relative;
     left: 0px;
-    /* right: 0px; */
     display: flex;
     text-align: center;
   }
@@ -536,6 +535,25 @@ form{
     justify-content: center;
     position: relative;
     bottom: 50px;
+  }
+}
+
+@media  (max-width: 450px) {
+  #about-section {
+    height: 350px !important;
+  }
+
+  .card img, .card h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+  .product-button{
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    margin-left: 1.5rem;
+    width: 80%;
   }
 }
 

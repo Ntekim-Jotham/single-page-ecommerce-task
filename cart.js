@@ -54,40 +54,44 @@ function addToCart(item_id){
 
    let checkContent = 'ADD TO CART';
 
-   if(addToCartButtonClick.innerText == checkContent) {
-      if (!checkItemExist) {
-         addToCartButtonClick.style.backgroundColor = '#FFCD9E';
-         addToCartButtonClick.innerText = 'Remove from Cart'; 
-         addToCartButtonClick.style.color = 'black'; 
-         cartItems.push(tempItem);
-         createTableElements(); 
-      }  
-   }else{
-      addToCartButtonClick.style.backgroundColor = '#FF9A3D';
-      addToCartButtonClick.innerText = 'ADD TO CART'; 
-      addToCartButtonClick.style.color = 'whitesmoke'; 
       bodyElement.addEventListener('click', event => {
 
-         let tempItem = products.find((item) => item.id == item_id);
-         let itemFind = cartItems.includes(tempItem);
+         let itemFind = cartItems.find((item) => item.id == item_id);
+         // let itemFind = cartItems.includes(tempItem);
          let itemIndex = cartItems.findIndex((item) => item.id == tempItem.id);
-   
-          if (event.target == addToCartButtonClick) {
-               if( itemFind){
+         if(event.target == addToCartButtonClick) {
+            if(addToCartButtonClick.innerText == checkContent) {
+               if (!checkItemExist) {
+                  addToCartButtonClick.style.backgroundColor = '#FFCD9E';
+                  addToCartButtonClick.innerText = 'Remove from Cart'; 
+                  addToCartButtonClick.style.color = 'black'; 
+                  cartItems.push(tempItem);
+                  createTableElements(); 
+                  itemsIndexing();
+                  displayNumberOfItemsAddedToCart();
+                  displayCartItems();
+               }  
+            }else if(addToCartButtonClick.innerText == 'Remove from Cart') {
+               addToCartButtonClick.style.backgroundColor = '#FF9A3D';
+               addToCartButtonClick.innerText = 'ADD TO CART'; 
+               addToCartButtonClick.style.color = 'whitesmoke';
+               if(itemFind){
                   cartItems.splice(itemIndex, 1);
                   tableBody.rows[itemIndex].remove();
                   calculateCartItemsAmount();
+                  itemsIndexing();
                   displayNumberOfItemsAddedToCart();
+                  displayCartItems();
+
                } 
+            }     
          }
          
       });
-      // removeItemFromCart(item_id);
    }
-   displayNumberOfItemsAddedToCart();
-   displayCartItems();
+   
 
-}
+
 
 function displayNumberOfItemsAddedToCart() {
    let cartSpanElement = document.querySelector('#cart-button').lastElementChild;
@@ -99,71 +103,41 @@ function displayNumberOfItemsAddedToCart() {
 // Create row and column element for cart table each time the addToCart button is clicked
 function createTableElements() {
    let row = document.createElement('tr');
-   row.style.height = "35px";
 
    let cell1 = document.createElement('td');
-   cell1.style.display = "flex";
-   cell1.style.flexWrap = "wrap";
-   cell1.style.flexDirection = row;
-   cell1.style.flexBasis = 60 + "px";
-   cell1.style.fontSize = 16 + "px";
+   cell1.classList.add('t1');
    
    let cell2 = document.createElement('td');
    cell2.id = "item-name";
-   cell2.style.display = "flex";
-   cell2.style.flexWrap = "wrap";
-   cell2.style.flexDirection = row;
-   cell2.style.flexBasis = 140 + "px";
-   cell2.style.fontSize = 16 + "px";
+   cell2.classList.add('t2');
+
 
    let cell3 = document.createElement('td');
    cell3.className = "price";
-   cell3.style.display = "flex";
-   cell3.style.flexWrap = "wrap";
-   cell3.style.flexDirection = row;
-   cell3.style.flexBasis = 140 + "px";
-   cell3.style.fontSize = 16 + "px";
+   cell3.classList.add('t3');
 
    let cell4 = document.createElement('td');
    let incrementButton = document.createElement('button');
    let decrementButton = document.createElement('button');
    let qtyTotalPara = document.createElement('p');
 
-   cell4.className = "item-qty-cell"
-   cell4.style.display = "flex";
-   cell4.style.flexWrap = "wrap";
-   cell4.style.flexDirection = row;
-   cell4.style.flexBasis = 140 + "px";
-   cell4.style.fontSize = 16 + "px";
+   cell4.className = "item-qty-cell";
+   cell4.classList.add('t4');
 
    decrementButton.id = "decrement";
    decrementButton.innerHTML = "-";
-   decrementButton.style.backgroundColor = "#FF9A3D";
-   decrementButton.style.height = 25 + "px";
-   decrementButton.style.width = 30 + "px";
-   decrementButton.style.border = 1 + "px solid #FF9A3D";
-   decrementButton.style.borderRadius = 5 + "px";
-   decrementButton.style.textAlign = "center";
-   decrementButton.style.fontSize = 18 + "px";
+   decrementButton.classList.add('decrement-button');
+   
 
    qtyTotalPara.className = "item-qty-para";
    qtyTotalPara.innerHTML = 1;
-   qtyTotalPara.style.position = "relative";
-   qtyTotalPara.style.textAlign = "center";
-   qtyTotalPara.style.top = "-" + 10 + "px";
-   qtyTotalPara.style.fontWeight = 500;
-   qtyTotalPara.style.marginLeft = 5 +"px";
-   qtyTotalPara.style.marginRight = 5 +"px";
+   qtyTotalPara.classList.add('qty-total-para');
+   
 
 
    incrementButton.innerHTML = "+";
-   incrementButton.style.backgroundColor = "#FF9A3D";
-   incrementButton.style.height = 25 + "px";
-   incrementButton.style.width = 30 + "px";
-   incrementButton.style.border = 1 + "px solid #FF9A3D";
-   incrementButton.style.borderRadius = 5 + "px";
-   incrementButton.style.textAlign = "center";
-   incrementButton.style.fontSize = 18 + "px";
+   incrementButton.classList.add('increment-button');
+
    cell4.appendChild(decrementButton);
    cell4.appendChild(qtyTotalPara);
    cell4.appendChild(incrementButton);
@@ -177,12 +151,8 @@ function createTableElements() {
 
    let removeButton = document.createElement('button');
    removeButton.innerHTML = "Remove";
-   removeButton.style.backgroundColor = "#FFCD9E";
-   removeButton.style.border = "1px solid #FFCD9E";
-   removeButton.style.borderRadius = "10px";
-   removeButton.style.height = "25px";
-   removeButton.style.fontSize = "16px";
-   removeButton.style.fontWeight = 600;
+   removeButton.classList.add('remove-button');
+  
    cell5.appendChild(removeButton);
 
    row.appendChild(cell1);
@@ -222,7 +192,6 @@ function displayCartItems() {
 
       decrementQuantity(item);
       // indexCell.innerHTML = index;
-      itemsIndexing(indexCell);
       itemNameCell.innerHTML = item.name;
       priceCell.innerHTML = item.price; 
       qtyCell.innerHTML = item.qty;
@@ -247,18 +216,21 @@ function calculateCartItemsAmount() {
    }, 0);
    
    // Get element that displays total amount on cart
-   let totalAmountElement = document.querySelector('.text').lastElementChild; 
-   totalAmountElement.value = '#' + totalAmount;
+   let totalAmountElement = document.querySelector('#amount'); 
+   totalAmountElement.innerHTML = '#' + totalAmount;
    return totalAmountElement;
 
 }
 
 // Numbering of items based on the number of items on cart
-function itemsIndexing(indexColumn) {
+function itemsIndexing() {
    let i = 0; 
    while (i < tableBody.rows.length) {
-      i += 1;
-      indexColumn.innerHTML = i; 
+      // if (tableBody.rows.length == cartItems.length) {
+         let indexColumn = tableBody.rows[i].cells[0];
+         i += 1;
+         indexColumn.innerHTML = i;
+      // }
    }
 }
 
@@ -298,7 +270,7 @@ function incrementQuantity(item) {
 }
 
 // Remove item from cart table when the remove button is clicked
-function removeItemFromCart(itemId) {
+function removeItemFromCart() {
    let addToCartButton = document.querySelectorAll('.product-button');
             
    let rowLastcell = tableBody.querySelectorAll('.delete-button');
@@ -306,6 +278,7 @@ function removeItemFromCart(itemId) {
    rowLastcell.forEach(cell => {
       
       cell.onclick = () => {
+         // let rowIndexCell = cell.parentNode.childNodes[0];
          let rowNameCell = cell.parentNode.childNodes[1].innerHTML;
          let itemIndex = cartItems.findIndex((item) => item.name == rowNameCell);
          let checkCartItems = cartItems.find((item) => item.name == rowNameCell);
@@ -319,6 +292,7 @@ function removeItemFromCart(itemId) {
          cartItems.splice(itemIndex, 1);
          cell.parentNode.remove();
          calculateCartItemsAmount();
+         itemsIndexing();
          displayNumberOfItemsAddedToCart();
       }
    });  

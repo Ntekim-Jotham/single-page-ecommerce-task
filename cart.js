@@ -103,6 +103,7 @@ function displayNumberOfItemsAddedToCart() {
 // Create row and column element for cart table each time the addToCart button is clicked
 function createTableElements() {
    let row = document.createElement('tr');
+   row.classList.add('row-item');
 
    let cell1 = document.createElement('td');
    cell1.classList.add('t1');
@@ -145,9 +146,6 @@ function createTableElements() {
 
    let cell5 = document.createElement('td');
    cell5.className = "delete-button";
-   cell5.style.display = "flex";
-   cell5.style.flexWrap = "wrap";
-   cell5.style.flexDirection = "row";
 
    let removeButton = document.createElement('button');
    removeButton.innerHTML = "Remove";
@@ -156,7 +154,6 @@ function createTableElements() {
    cell5.appendChild(removeButton);
 
    row.appendChild(cell1);
-
    row.appendChild(cell2);
    row.appendChild(cell3);
    row.appendChild(cell4);
@@ -245,8 +242,10 @@ function decrementQuantity(item) {
   
    decrementButton.onclick = () => {
       if(qtyCell.innerHTML == 1){
-        alert("Quantity of items can't be lower than 1");
+      //   alert("Quantity of items can't be lower than 1");
+          decrementButton.classList.add('decrement-btn');
       }else{
+         decrementButton.classList.add('decrement-button');
          item.qty--;
          qtyCell.innerHTML = item.qty;
          calculateCartItemsAmount();

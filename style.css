@@ -283,15 +283,15 @@ footer{
   padding: 30px 20px;
   box-sizing: border-box;
   z-index: 10;
-  overflow: auto;
+  overflow-y: auto;
   text-align: center;
   background:white;
 
 }
 
 table{
-  width: 90%;
-  justify-content: space-around;
+  width: 100%;
+  /* justify-content: space-around; */
 }
 .row-head{
   display: flex;
@@ -555,7 +555,9 @@ form{
     width: 80%;
   }
 
-  
+  .row-head{
+    width: 85%;
+  }
 
   .remove-button{
     font-size: 24px;
@@ -603,6 +605,11 @@ form{
     width: 95%;
   }
 
+  .row-head{
+    width: 85%;
+  }
+  
+
   footer{
     display: flex;
     flex-direction: column;
@@ -645,6 +652,9 @@ form{
     width: 95%;
   }
 
+  .row-head{
+    width: 88%;
+  }
   
   .remove-button{
     font-size: 16px;
